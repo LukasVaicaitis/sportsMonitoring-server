@@ -1,6 +1,0 @@
-2025-05-17 17:55:45.373 [info] [certificates] Removed 3 expired certificates
-2025-05-17 17:55:47.929 [info] [fetcher] Using Helix fetcher, Electron fetcher is not available.
-2025-05-17 17:55:47.929 [info] [code-referencing] Public code references are enabled.
-2025-05-17 17:55:48.816 [info] [fetcher] Using Helix fetcher, Electron fetcher is not available.
-2025-05-17 17:55:53.811 [info] [fetchCompletions] Request b8e31739-4c53-4a38-85ef-4a3e553c3a05 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-4o-copilot/completions> finished with 200 status after 465.4033399999971ms
-2025-05-17 17:55:53.822 [info] [streamChoices] solution 0 returned. finish reason: [stop]

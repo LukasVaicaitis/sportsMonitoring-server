@@ -1,5 +1,0 @@
-2025-05-02 02:47:14.817 [info] Extension host with pid 345051 started
-2025-05-02 02:47:15.527 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
-2025-05-02 02:47:16.532 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
-2025-05-02 02:47:18.919 [info] Extension host terminating: received terminate message from renderer
-2025-05-02 02:47:18.929 [info] Extension host with pid 345051 exiting with code 0
