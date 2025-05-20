@@ -1,0 +1,28 @@
+2025-05-03 22:43:23.278 [info] Can't use the Electron fetcher in this environment.
+2025-05-03 22:43:23.278 [info] Using the Node fetch fetcher.
+2025-05-03 22:43:23.278 [info] Initializing Git extension service.
+2025-05-03 22:43:23.278 [info] Successfully activated the vscode.git extension.
+2025-05-03 22:43:23.279 [info] Enablement state of the vscode.git extension: true.
+2025-05-03 22:43:23.279 [info] Successfully registered Git commit message provider.
+2025-05-03 22:43:25.316 [info] Logged in as LukasVaicaitis
+2025-05-03 22:43:26.280 [info] Got Copilot token for LukasVaicaitis
+2025-05-03 22:43:26.997 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-03 22:43:26.998 [info] GitHub.vscode-pull-request-github extension is not yet activated.
+2025-05-03 22:43:27.031 [info] Registering default platform agent...
+2025-05-03 22:43:27.511 [info] Fetched model metadata in 1211ms 7ca7cb3a-ef26-4941-9d2f-6d63f3494e84
+2025-05-03 22:43:27.609 [info] activationBlocker from 'languageModelAccess' took for 3241ms
+2025-05-03 23:21:27.863 [info] Logged in as LukasVaicaitis
+2025-05-03 23:21:28.617 [info] Got Copilot token for LukasVaicaitis
+2025-05-03 23:29:27.890 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-03 23:56:27.949 [info] Logged in as LukasVaicaitis
+2025-05-03 23:56:28.746 [info] Got Copilot token for LukasVaicaitis
+2025-05-04 00:01:35.027 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-04 00:24:27.857 [info] Logged in as LukasVaicaitis
+2025-05-04 00:24:28.616 [info] Got Copilot token for LukasVaicaitis
+2025-05-04 00:28:49.849 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-04 00:51:27.886 [info] Logged in as LukasVaicaitis
+2025-05-04 00:51:28.718 [info] Got Copilot token for LukasVaicaitis
+2025-05-04 00:59:27.847 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-04 01:26:18.093 [info] Logged in as LukasVaicaitis
+2025-05-04 01:26:18.825 [info] Got Copilot token for LukasVaicaitis
+2025-05-04 01:26:19.321 [info] copilot token chat_enabled: true, sku: free_limited_copilot

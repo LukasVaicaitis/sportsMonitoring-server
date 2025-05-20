@@ -1,0 +1,51 @@
+2025-05-05 21:29:57.835 [info] Can't use the Electron fetcher in this environment.
+2025-05-05 21:29:57.835 [info] Using the Node fetch fetcher.
+2025-05-05 21:29:57.835 [info] Initializing Git extension service.
+2025-05-05 21:29:57.835 [info] Successfully activated the vscode.git extension.
+2025-05-05 21:29:57.835 [info] Enablement state of the vscode.git extension: true.
+2025-05-05 21:29:57.835 [info] Successfully registered Git commit message provider.
+2025-05-05 21:30:01.073 [info] Logged in as LukasVaicaitis
+2025-05-05 21:30:07.246 [info] Got Copilot token for LukasVaicaitis
+2025-05-05 21:30:08.706 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-05 21:30:08.707 [info] GitHub.vscode-pull-request-github extension is not yet activated.
+2025-05-05 21:30:08.739 [info] Registering default platform agent...
+2025-05-05 21:30:09.256 [info] Fetched model metadata in 1980ms a4d3d1af-a4cb-4911-868f-54574deab105
+2025-05-05 21:30:09.272 [info] activationBlocker from 'languageModelAccess' took for 11646ms
+2025-05-05 22:11:17.357 [info] Logged in as LukasVaicaitis
+2025-05-05 22:11:18.218 [info] Got Copilot token for LukasVaicaitis
+2025-05-05 22:19:17.316 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-05 22:46:17.318 [info] Logged in as LukasVaicaitis
+2025-05-05 22:46:18.103 [info] Got Copilot token for LukasVaicaitis
+2025-05-05 22:53:01.337 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-05 23:15:17.318 [info] Logged in as LukasVaicaitis
+2025-05-05 23:15:18.081 [info] Got Copilot token for LukasVaicaitis
+2025-05-05 23:23:17.306 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-05 23:48:02.367 [info] Logged in as LukasVaicaitis
+2025-05-05 23:48:03.185 [info] Got Copilot token for LukasVaicaitis
+2025-05-05 23:48:03.760 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 00:25:17.328 [info] Logged in as LukasVaicaitis
+2025-05-06 00:25:18.115 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 00:33:17.314 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 00:53:34.670 [info] Logged in as LukasVaicaitis
+2025-05-06 00:53:35.496 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 00:53:35.985 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 01:31:17.332 [info] Logged in as LukasVaicaitis
+2025-05-06 01:31:18.092 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 01:39:17.334 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 02:06:17.319 [info] Logged in as LukasVaicaitis
+2025-05-06 02:06:18.107 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 02:14:17.359 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 02:33:54.878 [info] Logged in as LukasVaicaitis
+2025-05-06 02:33:55.680 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 02:33:56.109 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 03:08:24.754 [info] Logged in as LukasVaicaitis
+2025-05-06 03:08:25.612 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 03:08:26.077 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 03:23:27.324 [info] Fetched model metadata in 804ms f0ce16a5-e294-4be0-9399-c165b841aa27
+2025-05-06 03:38:27.790 [info] Logged in as LukasVaicaitis
+2025-05-06 03:38:28.618 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 03:38:29.067 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-06 03:53:30.401 [info] Fetched model metadata in 888ms 54fa4bab-5963-4d4c-9378-1f5b06ab1705
+2025-05-06 04:16:17.333 [info] Logged in as LukasVaicaitis
+2025-05-06 04:16:18.106 [info] Got Copilot token for LukasVaicaitis
+2025-05-06 04:24:17.315 [info] copilot token chat_enabled: true, sku: free_limited_copilot

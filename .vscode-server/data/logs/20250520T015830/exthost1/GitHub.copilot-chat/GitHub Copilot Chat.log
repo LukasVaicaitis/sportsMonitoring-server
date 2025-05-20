@@ -1,0 +1,27 @@
+2025-05-20 01:58:50.276 [info] Can't use the Electron fetcher in this environment.
+2025-05-20 01:58:50.276 [info] Using the Node fetch fetcher.
+2025-05-20 01:58:50.276 [info] Initializing Git extension service.
+2025-05-20 01:58:50.276 [info] Successfully activated the vscode.git extension.
+2025-05-20 01:58:50.276 [info] Enablement state of the vscode.git extension: true.
+2025-05-20 01:58:50.276 [info] Successfully registered Git commit message provider.
+2025-05-20 01:58:51.700 [info] Logged in as LukasVaicaitis
+2025-05-20 01:58:53.719 [info] Got Copilot token for LukasVaicaitis
+2025-05-20 01:58:55.139 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-20 01:58:55.139 [info] GitHub.vscode-pull-request-github extension is not yet activated.
+2025-05-20 01:58:55.214 [info] Registering default platform agent...
+2025-05-20 01:58:56.309 [info] Fetched model metadata in 2539ms 167ab697-388d-4dde-9e4f-c6ada2005ee6
+2025-05-20 01:58:56.331 [info] activationBlocker from 'languageModelAccess' took for 5942ms
+2025-05-20 01:58:56.562 [info] BYOK: Copilot Chat known models list fetched successfully.
+2025-05-20 02:01:15.748 [info] TypeScript server plugin activated.
+2025-05-20 02:01:15.753 [info] Registered TypeScript context provider with Copilot inline completions.
+2025-05-20 02:14:00.365 [info] Fetched model metadata in 795ms 869bb0f1-b8da-4ad0-a68a-45c239a58752
+2025-05-20 02:29:01.169 [info] Logged in as LukasVaicaitis
+2025-05-20 02:29:02.631 [info] Got Copilot token for LukasVaicaitis
+2025-05-20 02:29:03.318 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-20 02:29:03.483 [info] Fetched model metadata in 836ms b5135c4a-be7e-47ea-b0a8-611975adf988
+2025-05-20 02:29:03.602 [info] BYOK: Copilot Chat known models list fetched successfully.
+2025-05-20 02:44:04.675 [info] Fetched model metadata in 761ms f062517c-58da-4f17-b274-9969bb60ba53
+2025-05-20 02:59:05.223 [info] Logged in as LukasVaicaitis
+2025-05-20 02:59:06.446 [info] Got Copilot token for LukasVaicaitis
+2025-05-20 02:59:07.070 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-20 02:59:07.337 [info] BYOK: Copilot Chat known models list fetched successfully.

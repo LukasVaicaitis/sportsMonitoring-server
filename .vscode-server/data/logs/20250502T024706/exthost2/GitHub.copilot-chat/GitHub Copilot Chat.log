@@ -1,0 +1,19 @@
+2025-05-02 02:47:50.761 [info] Can't use the Electron fetcher in this environment.
+2025-05-02 02:47:50.761 [info] Using the Node fetch fetcher.
+2025-05-02 02:47:50.761 [info] Initializing Git extension service.
+2025-05-02 02:47:50.761 [info] Successfully activated the vscode.git extension.
+2025-05-02 02:47:50.761 [info] Enablement state of the vscode.git extension: true.
+2025-05-02 02:47:50.761 [info] Successfully registered Git commit message provider.
+2025-05-02 02:47:59.290 [info] Logged in as LukasVaicaitis
+2025-05-02 02:48:00.263 [info] Got Copilot token for LukasVaicaitis
+2025-05-02 02:48:04.601 [info] Fetched model metadata in 4291ms 6caa2ac2-5fe5-42bd-a150-7b7f37984366
+2025-05-02 02:48:04.703 [info] activationBlocker from 'languageModelAccess' took for 13300ms
+2025-05-02 02:48:08.081 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-02 02:48:08.081 [info] GitHub.vscode-pull-request-github extension is not yet activated.
+2025-05-02 02:48:08.104 [info] Registering default platform agent...
+2025-05-02 03:26:57.592 [info] Logged in as LukasVaicaitis
+2025-05-02 03:26:58.378 [info] Got Copilot token for LukasVaicaitis
+2025-05-02 03:26:58.870 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-05-02 04:04:44.343 [info] Logged in as LukasVaicaitis
+2025-05-02 04:04:45.094 [info] Got Copilot token for LukasVaicaitis
+2025-05-02 04:12:44.323 [info] copilot token chat_enabled: true, sku: free_limited_copilot

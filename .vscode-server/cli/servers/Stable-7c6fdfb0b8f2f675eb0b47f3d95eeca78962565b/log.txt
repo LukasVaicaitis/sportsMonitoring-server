@@ -1,0 +1,48 @@
+*
+* Visual Studio Code Server
+*
+* By using the software, you agree to
+* the Visual Studio Code Server License Terms (https://aka.ms/vscode-server-license) and
+* the Microsoft Privacy Statement (https://privacy.microsoft.com/en-US/privacystatement).
+*
+Server bound to /tmp/code-83c777f2-3562-4a7f-b195-ea7559e76325
+Extension host agent listening on /tmp/code-83c777f2-3562-4a7f-b195-ea7559e76325
+
+[18:23:16] 
+
+
+
+
+[18:23:16] Extension host agent started.
+[18:23:16] [<unknown>][7a910767][ManagementConnection] New connection established.
+[18:23:16] [<unknown>][17047c03][ExtensionHostConnection] New connection established.
+[18:23:16] Deleted marked for removal extension from disk github.copilot-chat /root/.vscode-server/extensions/github.copilot-chat-0.26.4
+[18:23:16] [<unknown>][17047c03][ExtensionHostConnection] <122565> Launched Extension Host Process.
+[18:23:19] Getting Manifest... github.copilot
+[18:23:20] Installing extension: github.copilot {
+  productVersion: { version: '1.99.2', date: '1970-01-01T00:00:00.000Z' },
+  pinned: false,
+  operation: 3,
+  isApplicationScoped: false,
+  donotVerifySignature: false,
+  context: { clientTargetPlatform: 'darwin-arm64' },
+  profileLocation: gr {
+    scheme: 'file',
+    authority: '',
+    path: '/root/.vscode-server/extensions/extensions.json',
+    query: '',
+    fragment: '',
+    _formatted: 'file:///root/.vscode-server/extensions/extensions.json',
+    _fsPath: '/root/.vscode-server/extensions/extensions.json'
+  }
+}
+[18:23:20] Getting Manifest... github.copilot-chat
+[18:23:25] Extension signature verification result for github.copilot: Success. Internal Code: 0. Executed: true. Duration: 3572ms.
+[18:23:28] Extracted extension to file:///root/.vscode-server/extensions/github.copilot-1.303.0: github.copilot
+[18:23:28] Renamed to /root/.vscode-server/extensions/github.copilot-1.303.0
+[18:23:28] Marked extension as removed github.copilot-1.301.0
+[18:23:28] Extension installed successfully: github.copilot file:///root/.vscode-server/extensions/extensions.json
+New EH opened, aborting shutdown
+[18:28:16] New EH opened, aborting shutdown
+[18:52:13] [<unknown>][17047c03][ExtensionHostConnection] The client has reconnected.
+[20:00:35] [<unknown>][7a910767][ManagementConnection] The client has disconnected, will wait for reconnection 3h before disposing...

@@ -1,0 +1,8 @@
+# Server Port
+PORT=3000
+
+MONGO_URI=mongodb://localhost:27017/sportsMonitoringDB
+
+JWT_SECRET=941d94ef38542fbf2577e9c9d446414e505a6bab201045c6af5fe9bdbf156961
+
+GOOGLE_CLIENT_ID=882053158713-pm7044ih3g7uru750evmjsjp515dlum2.apps.googleusercontent.com

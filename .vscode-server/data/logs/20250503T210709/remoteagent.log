@@ -1,0 +1,27 @@
+2025-05-03 21:07:10.095 [info] 
+
+
+
+
+2025-05-03 21:07:10.111 [info] Extension host agent started.
+2025-05-03 21:07:10.261 [info] [<unknown>][45737552][ExtensionHostConnection] New connection established.
+2025-05-03 21:07:10.272 [info] [<unknown>][ec6b3498][ManagementConnection] New connection established.
+2025-05-03 21:07:10.280 [info] Deleted marked for removal extension from disk github.copilot /root/.vscode-server/extensions/github.copilot-1.311.0
+2025-05-03 21:07:10.390 [info] [<unknown>][45737552][ExtensionHostConnection] <14781> Launched Extension Host Process.
+2025-05-03 21:12:10.114 [info] New EH opened, aborting shutdown
+2025-05-03 22:06:37.727 [info] [<unknown>][ec6b3498][ManagementConnection] The client has disconnected, will wait for reconnection 3h before disposing...
+2025-05-03 22:43:10.722 [info] [<unknown>][ec6b3498][ManagementConnection] Another client has connected, will shorten the wait for reconnection 5m before disposing...
+2025-05-03 22:43:10.731 [info] [<unknown>][3b19d387][ExtensionHostConnection] New connection established.
+2025-05-03 22:43:10.734 [info] [<unknown>][c8892261][ManagementConnection] New connection established.
+2025-05-03 22:43:10.741 [info] [<unknown>][3b19d387][ExtensionHostConnection] <15952> Launched Extension Host Process.
+2025-05-03 22:43:10.743 [error] Error: Unexpected SIGPIPE
+    at process.<anonymous> (file:///root/.vscode-server/cli/servers/Stable-17baf841131aa23349f217ca7c570c76ee87b957/server/out/server-main.js:183:1060)
+    at process.emit (node:events:530:35)
+2025-05-03 22:48:10.938 [info] [<unknown>][ec6b3498][ManagementConnection] The reconnection short grace time of 5m has expired, so the connection will be disposed.
+2025-05-03 22:48:11.296 [info] [<unknown>][45737552][ExtensionHostConnection] <14781> Extension Host Process exited with code: 0, signal: null.
+2025-05-04 01:26:17.858 [info] [<unknown>][3b19d387][ExtensionHostConnection] The client has reconnected.
+2025-05-04 01:49:54.382 [info] [<unknown>][c8892261][ManagementConnection] The client has disconnected, will wait for reconnection 3h before disposing...
+2025-05-04 04:49:38.581 [info] [<unknown>][3b19d387][ExtensionHostConnection] <15952> Extension Host Process exited with code: 0, signal: null.
+2025-05-04 04:49:38.582 [info] Last EH closed, waiting before shutting down
+2025-05-04 04:50:00.061 [info] [<unknown>][c8892261][ManagementConnection] The reconnection grace time of 3h has expired, so the connection will be disposed.
+2025-05-04 04:54:38.589 [info] Last EH closed, shutting down

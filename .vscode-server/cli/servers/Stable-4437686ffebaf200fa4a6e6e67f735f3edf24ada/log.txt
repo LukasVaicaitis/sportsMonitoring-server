@@ -1,0 +1,21 @@
+*
+* Visual Studio Code Server
+*
+* By using the software, you agree to
+* the Visual Studio Code Server License Terms (https://aka.ms/vscode-server-license) and
+* the Microsoft Privacy Statement (https://privacy.microsoft.com/en-US/privacystatement).
+*
+Server bound to /tmp/code-eae917c3-770f-453b-934b-a0fb8eb0f3cb
+Extension host agent listening on /tmp/code-eae917c3-770f-453b-934b-a0fb8eb0f3cb
+
+[22:50:58] 
+
+
+
+
+[22:50:58] Extension host agent started.
+[22:50:58] [<unknown>][9e8e4399][ManagementConnection] New connection established.
+[22:50:58] [<unknown>][1257f907][ExtensionHostConnection] New connection established.
+[22:50:58] [<unknown>][1257f907][ExtensionHostConnection] <39955> Launched Extension Host Process.
+[22:50:59] [<unknown>][9e8e4399][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+[22:51:48] Extensions added from another source github.copilot-chat file:///root/.vscode-server/extensions/extensions.json

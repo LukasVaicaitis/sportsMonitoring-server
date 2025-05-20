@@ -1,0 +1,11 @@
+# Server Port
+PORT=3000  # Or any other port you prefer (e.g., 8080)
+
+# MongoDB Connection String
+# If MongoDB is on the same server and requires no auth (not recommended for production)
+MONGO_URI=mongodb://localhost:27017/sportsMonitoringDB
+# If MongoDB requires authentication (RECOMMENDED)
+#MONGO_URI=mongodb://yourMongoUser:yourMongoPassword@localhost:27017/yourDatabaseName
+
+# Secret key for JWT (later for login tokens) - Make this long and random!
+JWT_SECRET=941d94ef38542fbf2577e9c9d446414e505a6bab201045c6af5fe9bdbf156961
