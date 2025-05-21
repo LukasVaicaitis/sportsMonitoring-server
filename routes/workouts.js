@@ -173,10 +173,11 @@ router.post(
             const startTimeDate = new Date(startTime);
             let workout = await Workout.findOneAndUpdate(
                 { userId: userIdObject, date: localDateString, status: { $in: ['planned', 'in-progress'] } },
-                { $set: { status: 'completed', startTime: startTimeDate },
+                {
+                    $set: { status: 'completed', startTime: startTimeDate },
                     $setOnInsert: { userId: userIdObject, date: localDateString, createdByUserId: userIdObject, isCoachAssigned: false, exercises: [], workoutType: 'Mixed' }
                 },
-                { new: true, upsert: true, sort: { date: 1 } } 
+                { new: true, upsert: true, sort: { date: 1 } }
             );
             workout.endTime = undefined;
             workout.status = 'completed';
@@ -185,14 +186,14 @@ router.post(
             if (!machine) {
                 return res.status(404).json({ msg: 'Machine details not found' });
             }
-            await Machine.updateOne( { _id: machineId }, { $inc: { scanCount: 1 } } );
+            await Machine.updateOne({ _id: machineId }, { $inc: { scanCount: 1 } });
 
             const newExercise = {
                 machineId: machineId,
                 exerciseName: machine.exerciseName,
                 exerciseType: machine.exerciseType,
                 trainedMuscle: machine.trainedMuscle,
-                startTime: startTimeDate 
+                startTime: startTimeDate
             };
             workout.exercises.push(newExercise);
 
@@ -269,7 +270,7 @@ router.delete(
             const userIdObject = new mongoose.Types.ObjectId(userId);
             const workout = await Workout.findOneAndUpdate(
                 { _id: workoutId, userId: userIdObject },
-                { $pull: { exercises: { _id: exerciseId }}},
+                { $pull: { exercises: { _id: exerciseId } } },
                 { new: true }
             );
             if (!workout) {
@@ -369,6 +370,7 @@ router.post('/generateAI', authMiddleware, async (req, res) => {
     const userId = req.user.id;
     const userIdObject = new mongoose.Types.ObjectId(userId);
     const apiKey = process.env.GEMINI_API_KEY;
+    const { planDate: requestedPlanDateString } = req.body;
 
     if (!apiKey) {
         console.error("Gemini API Key missing in environment variables.");
@@ -388,6 +390,29 @@ router.post('/generateAI', authMiddleware, async (req, res) => {
         const prefMuscleFocus = prefs.muscleFocus || 'Auto';
         const prefNumExercises = prefs.numExercises || 5;
         const prefRepRange = prefs.repRange || '8-12';
+
+        let finalPlanDate;
+        let dateForPrompt = "today";
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (requestedPlanDateString) {
+            const parsedDate = new Date(requestedPlanDateString);
+            if (!isNaN(parsedDate.getTime()) && new Date(parsedDate.setHours(0,0,0,0)) >= today) {
+                finalPlanDate = parsedDate;
+                if (finalPlanDate.toISOString().split('T')[0] !== today.toISOString().split('T')[0]) {
+                    dateForPrompt = `for ${finalPlanDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+                }
+            } else {
+                finalPlanDate = new Date();
+                if (requestedPlanDateString) console.warn(`Invalid or past date "${requestedPlanDateString}" received, defaulting to today.`);
+            }
+        } else {
+            finalPlanDate = new Date();
+        }
+        finalPlanDate.setHours(12, 0, 0, 0);
+        const planDateForDb = finalPlanDate.toISOString().split('T')[0];
 
         const availableMachines = await Machine.find({ gymId: userGymId }).lean();
         if (!availableMachines || availableMachines.length === 0) {
@@ -439,7 +464,7 @@ router.post('/generateAI', authMiddleware, async (req, res) => {
             Available Equipment/Exercises at their gym (${gymName}): ${machineListString}.
             **Strictly use ONLY exercises derivable from this available equipment list.** Do not invent exercises.
 
-            Generate a suitable workout plan for today.
+            Generate a suitable workout plan ${dateForPrompt}.
 
             Respond ONLY with a valid JSON array where each object represents one exercise for the plan.
             Each exercise object MUST have these exact keys:
@@ -473,7 +498,7 @@ router.post('/generateAI', authMiddleware, async (req, res) => {
 
         if (jsonMatch && jsonMatch[0]) {
             cleanedJsonString = jsonMatch[0];
-        } 
+        }
         else {
             throw new Error('Failed to extract valid JSON block from AI response.');
         }
@@ -515,14 +540,18 @@ router.post('/generateAI', authMiddleware, async (req, res) => {
 
         const planDate = new Date(); planDate.setHours(12, 0, 0, 0);
         const planDateString = planDate.toLocaleDateString('sv-SE');
-        let finalWorkoutType = 'Mixed'; 
+        let finalWorkoutType = 'Mixed';
         const typesInPlan = [...new Set(plannedExercises.map(e => e.exerciseType))];
         if (typesInPlan.length === 1) finalWorkoutType = typesInPlan[0];
         if (prefWorkoutType !== 'Any' && prefWorkoutType !== 'Mixed') finalWorkoutType = prefWorkoutType;
 
         const newWorkout = new Workout({
-            userId: userIdObject, createdByUserId: userIdObject, date: planDateString,
-            status: 'planned', exercises: plannedExercises, workoutType: finalWorkoutType,
+            userId: userIdObject,
+            createdByUserId: userIdObject, 
+            date: planDateForDb,
+            status: 'planned', 
+            exercises: plannedExercises, 
+            workoutType: finalWorkoutType,
             isCoachAssigned: false
         });
 
@@ -562,11 +591,12 @@ function shuffleArray(array) {
 router.post('/generate', authMiddleware, async (req, res) => {
     const userId = req.user.id;
     const userIdObject = new mongoose.Types.ObjectId(userId);
+    const { planDate: requestedPlanDateString } = req.body;
 
     try {
         const user = await User.findById(userIdObject).select('activeGymId preferences');
         if (!user) {
-             return res.status(404).json({ msg: "User not found." });
+            return res.status(404).json({ msg: "User not found." });
         }
         if (!user.activeGymId) {
             return res.status(400).json({ msg: "Please select an active gym in your profile first." });
@@ -615,7 +645,7 @@ router.post('/generate', authMiddleware, async (req, res) => {
             const lastTrained = {};
             majorGroups.forEach(g => lastTrained[g] = new Date('1970-01-01'));
             for (const workout of recentWorkouts) {
-                 const workoutDate = new Date(workout.date);
+                const workoutDate = new Date(workout.date);
                 for (const exercise of workout.exercises) {
                     const majorGroup = getMajorMuscleGroup(exercise.trainedMuscle);
                     if (majorGroups.includes(majorGroup) && workoutDate > lastTrained[majorGroup]) {
@@ -632,8 +662,8 @@ router.post('/generate', authMiddleware, async (req, res) => {
                 let oldestDate = new Date('3000-01-01');
                 majorGroups.forEach(group => {
                     if (lastTrained[group] < oldestDate) {
-                         oldestDate = lastTrained[group];
-                         primaryTargetGroup = group;
+                        oldestDate = lastTrained[group];
+                        primaryTargetGroup = group;
                     }
                 });
             }
@@ -674,13 +704,14 @@ router.post('/generate', authMiddleware, async (req, res) => {
             }
             const primaryMachinesAvailable = await Machine.find({ ...queryMachineFilter, trainedMuscle: primaryTargetGroup }).lean();
             const secondaryMachinesAvailable = secondaryTargetGroups.length > 0 ? await Machine.find({
-                ...queryMachineFilter, trainedMuscle: { $in: secondaryTargetGroups }}).lean() : [];
+                ...queryMachineFilter, trainedMuscle: { $in: secondaryTargetGroups }
+            }).lean() : [];
 
-             const fillerMachinesAvailable = (prefMuscleFocus === 'Full Body' || primaryMachinesAvailable.length < primaryExerciseCount || secondaryMachinesAvailable.length < secondaryExerciseCount)
+            const fillerMachinesAvailable = (prefMuscleFocus === 'Full Body' || primaryMachinesAvailable.length < primaryExerciseCount || secondaryMachinesAvailable.length < secondaryExerciseCount)
                 ? await Machine.find({
                     ...queryMachineFilter,
                     trainedMuscle: { $nin: [primaryTargetGroup, ...secondaryTargetGroups] }
-                  }).lean()
+                }).lean()
                 : [];
 
             const selectedMachineIds = new Set();
@@ -699,9 +730,9 @@ router.post('/generate', authMiddleware, async (req, res) => {
 
             let remainingSlots = totalExerciseTarget - plannedExercises.length;
             if (remainingSlots > 0 && secondaryTargetGroups.length > 0 && secondaryMachinesAvailable.length > 0) {
-                 let shuffledSecondary = shuffleArray(secondaryMachinesAvailable);
-                 let secondaryToTake = Math.min(remainingSlots, secondaryExerciseCount);
-                 for (let i = 0; plannedExercises.length < totalExerciseTarget && i < shuffledSecondary.length && secondaryToTake > 0; i++) {
+                let shuffledSecondary = shuffleArray(secondaryMachinesAvailable);
+                let secondaryToTake = Math.min(remainingSlots, secondaryExerciseCount);
+                for (let i = 0; plannedExercises.length < totalExerciseTarget && i < shuffledSecondary.length && secondaryToTake > 0; i++) {
                     if (!selectedMachineIds.has(shuffledSecondary[i]._id.toString())) {
                         plannedExercises.push({
                             machineId: shuffledSecondary[i]._id, exerciseName: shuffledSecondary[i].exerciseName,
@@ -710,13 +741,13 @@ router.post('/generate', authMiddleware, async (req, res) => {
                         selectedMachineIds.add(shuffledSecondary[i]._id.toString());
                         secondaryToTake--;
                     }
-                 }
+                }
             }
 
-             remainingSlots = totalExerciseTarget - plannedExercises.length;
-             if (remainingSlots > 0 && fillerMachinesAvailable.length > 0) {
-                 let shuffledFillers = shuffleArray(fillerMachinesAvailable);
-                 for (let i = 0; plannedExercises.length < totalExerciseTarget && i < shuffledFillers.length; i++) {
+            remainingSlots = totalExerciseTarget - plannedExercises.length;
+            if (remainingSlots > 0 && fillerMachinesAvailable.length > 0) {
+                let shuffledFillers = shuffleArray(fillerMachinesAvailable);
+                for (let i = 0; plannedExercises.length < totalExerciseTarget && i < shuffledFillers.length; i++) {
                     if (!selectedMachineIds.has(shuffledFillers[i]._id.toString())) {
                         plannedExercises.push({
                             machineId: shuffledFillers[i]._id, exerciseName: shuffledFillers[i].exerciseName,
@@ -724,19 +755,19 @@ router.post('/generate', authMiddleware, async (req, res) => {
                         });
                         selectedMachineIds.add(shuffledFillers[i]._id.toString());
                     }
-                 }
-             }
+                }
+            }
 
             if (plannedExercises.length === 0) {
                 return res.status(404).json({ msg: "Could not find any suitable machines matching your preferences in the selected gym." });
             }
 
-             if (finalWorkoutType === 'Any' || finalWorkoutType === 'Mixed') {
-                 const typesInPlan = [...new Set(plannedExercises.map(e => e.exerciseType))];
-                 if (typesInPlan.length === 1) finalWorkoutType = typesInPlan[0];
-                 else if (typesInPlan.length > 1) finalWorkoutType = 'Mixed';
-                 else finalWorkoutType = 'Unknown';
-             }
+            if (finalWorkoutType === 'Any' || finalWorkoutType === 'Mixed') {
+                const typesInPlan = [...new Set(plannedExercises.map(e => e.exerciseType))];
+                if (typesInPlan.length === 1) finalWorkoutType = typesInPlan[0];
+                else if (typesInPlan.length > 1) finalWorkoutType = 'Mixed';
+                else finalWorkoutType = 'Unknown';
+            }
         }
 
         if (finalWorkoutType === 'Strength' || finalWorkoutType === 'Mixed') {
@@ -748,14 +779,25 @@ router.post('/generate', authMiddleware, async (req, res) => {
             });
         }
 
-        const planDate = new Date();
-        planDate.setHours(12, 0, 0, 0);
-        const planDateString = planDate.toLocaleDateString('sv-SE');
+        let finalPlanDate;
+        if (requestedPlanDateString) {
+            const parsedDate = new Date(requestedPlanDateString);
+            if (!isNaN(parsedDate.getTime()) && parsedDate >= new Date(new Date().setHours(0, 0, 0, 0))) {
+                finalPlanDate = parsedDate;
+            } else {
+                finalPlanDate = new Date();
+            }
+        } else {
+            finalPlanDate = new Date();
+        }
+        finalPlanDate.setHours(12, 0, 0, 0);
+        const planDateForDb = finalPlanDate.toISOString().split('T')[0];
+
 
         const newWorkout = new Workout({
             userId: userIdObject,
             createdByUserId: userIdObject,
-            date: planDateString,
+            date: planDateForDb,
             status: 'planned',
             exercises: plannedExercises,
             workoutType: finalWorkoutType,
@@ -766,7 +808,6 @@ router.post('/generate', authMiddleware, async (req, res) => {
         res.status(201).json(newWorkout);
 
     } catch (err) {
-        console.error("Workout Generation Error:", err.message);
         res.status(500).send('Server Error');
     }
 });
@@ -795,7 +836,7 @@ router.put(
             }
 
             workout.exercises = exercises;
-            workout.markModified('exercises'); 
+            workout.markModified('exercises');
 
             if (workout.exercises && workout.exercises.length > 0) {
                 const types = [...new Set(workout.exercises.map(ex => ex.exerciseType).filter(Boolean))];
@@ -807,7 +848,7 @@ router.put(
             }
 
             await workout.save();
-            res.json(workout); 
+            res.json(workout);
 
         } catch (err) {
             res.status(500).send('Server Error');
@@ -864,7 +905,7 @@ router.put(
             exercise.set(exerciseUpdates);
 
             workout.endTime = exercise.endTime;
-            workout.status = 'completed'; 
+            workout.status = 'completed';
 
             if (workout.exercises && workout.exercises.length > 0) {
                 const types = [...new Set(workout.exercises.map(ex => ex.exerciseType).filter(Boolean))];
@@ -894,9 +935,9 @@ router.post(
         body('exercises.*.exerciseType', 'Exercise type is required').notEmpty().trim(),
         body('exercises.*.trainedMuscle', 'Trained muscle is required').notEmpty().trim(),
         body('exercises.*.machineId', 'Machine ID must be valid').optional().isMongoId(),
-        body('exercises.*.repetitions', 'Reps must be number').optional({nullable: true}).isInt({ min: 0 }),
-        body('exercises.*.weight', 'Weight must be number').optional({nullable: true}).isFloat({ min: 0 }),
-        body('exercises.*.weightUnit', 'Invalid unit').optional({nullable: true}).isIn(['kg', 'lbs']),
+        body('exercises.*.repetitions', 'Reps must be number').optional({ nullable: true }).isInt({ min: 0 }),
+        body('exercises.*.weight', 'Weight must be number').optional({ nullable: true }).isFloat({ min: 0 }),
+        body('exercises.*.weightUnit', 'Invalid unit').optional({ nullable: true }).isIn(['kg', 'lbs']),
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -911,10 +952,6 @@ router.post(
                 return res.status(404).json({ errors: [{ msg: `User not found with email: ${clientEmail}` }] });
             }
             const clientUserIdObject = clientUser._id;
-
-            if (clientUserIdObject.equals(trainerUserId)) {
-                return res.status(400).json({ errors: [{ msg: 'Cannot assign workout plan to yourself.' }] });
-            }
 
             let finalWorkoutType = 'Mixed';
             const typesInPlan = [...new Set(exercises.map(e => e.exerciseType).filter(Boolean))];
@@ -963,7 +1000,7 @@ router.put(
             }
 
             if (workout.status === 'completed') {
-                return res.status(400).json({ msg: 'Workout already marked as completed.'});
+                return res.status(400).json({ msg: 'Workout already marked as completed.' });
             }
 
             if (workout.exercises && workout.exercises.length > 0) {

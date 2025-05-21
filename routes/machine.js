@@ -44,7 +44,7 @@ router.get(
         const { tagId } = req.params;
 
         try {
-            const machine = await Machine.findOne({ tagId: tagId });
+            const machine = await Machine.findOne({ tagId: tagId }).populate('gymId', 'name');;
             if (!machine) {
                 return res.status(404).json({ msg: 'Machine not found for this tag' });
             }
@@ -65,39 +65,55 @@ router.post(
         body('exerciseName', 'Exercise name is required').not().isEmpty().trim(),
         body('instructionsLink', 'Invalid URL format').optional({ checkFalsy: true }).isURL(),
         body('trainedMuscle', 'Trained muscle group is required').not().isEmpty().trim(),
-        body('gymId', 'Gym ID is required').isMongoId(), 
+        body('gymId', 'Gym ID is required').isMongoId(),
+        body('allowRewrite').optional().isBoolean()
     ],
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        const { tagId, exerciseType, exerciseName, instructionsLink, trainedMuscle, gymId } = req.body;
+
+        const { tagId, exerciseType, exerciseName, instructionsLink, trainedMuscle, gymId, allowRewrite } = req.body;
 
         try {
-            let existingMachine = await Machine.findOne({ tagId });
-            if (existingMachine) {
-                return res.status(400).json({ errors: [{ msg: 'This NFC Tag is already registered to another machine.' }] });
-            }
-            const newMachine = new Machine({
-                tagId,
-                exerciseType,
-                exerciseName,
-                instructionsLink,
-                trainedMuscle,
-                gymId,
-                registeredBy: req.user.id
-            });
-            await newMachine.save();
+            let machine = await Machine.findOne({ tagId });
 
-            res.status(201).json(newMachine);
+            if (machine) {
+                if (allowRewrite === true) {
+                    machine.exerciseType = exerciseType;
+                    machine.exerciseName = exerciseName;
+                    machine.instructionsLink = instructionsLink;
+                    machine.trainedMuscle = trainedMuscle;
+                    machine.gymId = gymId;
+                    machine.registeredBy = req.user.id;
+                    machine.updatedAt = Date.now();
+
+                    await machine.save();
+                    return res.status(200).json(machine);
+                } else {
+                    return res.status(400).json({ errors: [{ msg: 'This NFC Tag is already registered.' }] });
+                }
+            } else {
+                const newMachine = new Machine({
+                    tagId,
+                    exerciseType,
+                    exerciseName,
+                    instructionsLink,
+                    trainedMuscle,
+                    gymId,
+                    registeredBy: req.user.id
+                });
+                await newMachine.save();
+                return res.status(201).json(newMachine);
+            }
 
         } catch (err) {
-            console.error("Machine registration error:", err.message);
-            if (err.code === 11000) { 
-                 return res.status(400).json({ errors: [{ msg: 'This NFC Tag ID is already registered (duplicate key).' }] });
+            console.error("Machine registration/update error:", err.message);
+            if (err.code === 11000 && !allowRewrite) {
+                 return res.status(400).json({ errors: [{ msg: 'This NFC Tag ID is already registered.' }] });
             }
-            res.status(500).send('Server error');   
+            res.status(500).send('Server error during machine registration/update.');
         }
     }
 );
